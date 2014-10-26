@@ -62,9 +62,19 @@ module LogoBotAssembly ( PenLift=false ) {
 			translate([(BaseDiameter/2-10) * cos(45), (BaseDiameter/2-10) * sin(45), -8 ])
 			rotate([0,0,-30])
 			MicroSwitch();
+			
+		step(3, "Push the two motor drivers onto the mounting posts", "400 300 -6 7 19 64 1 212 625") {
+		    // Left Motor Driver
+		    attach(LogoBot_Con_LeftMotorDriver, invertConnector(ULN2003DriverBoard_Con_UpperLeft), ExplodeSpacing=-20)
+			    ULN2003DriverBoard();
+		
+		    // Right Motor Driver
+		    attach(LogoBot_Con_RightMotorDriver, invertConnector(ULN2003DriverBoard_Con_UpperRight), ExplodeSpacing=-20)
+			    ULN2003DriverBoard();
+		}
 	
 		// Motor + Wheel assemblies (x2)
-		step(3, "Connect the two wheel assemblies", "400 300 -4 6 47 66 0 190 740")
+		step(4, "Clip the two wheels assemblies onto the base and connect the motor leads to the the motor drivers", "400 300 -4 6 47 66 0 190 740")
             for (i=[0:1])
                 mirror([i,0,0])
                 translate([BaseDiameter/2 + MotorOffsetX, 0, MotorOffsetZ])
@@ -76,16 +86,6 @@ module LogoBotAssembly ( PenLift=false ) {
                         WheelAssembly();
                 }
 		
-		step(4, "Push the two motor drivers onto the mounting posts", "400 300 -6 7 19 64 1 212 625") {
-		    // Left Motor Driver
-		    attach(LogoBot_Con_LeftMotorDriver, invertConnector(ULN2003DriverBoard_Con_UpperLeft), ExplodeSpacing=-20)
-			    ULN2003DriverBoard();
-		
-		    // Right Motor Driver
-		    attach(LogoBot_Con_RightMotorDriver, invertConnector(ULN2003DriverBoard_Con_UpperRight), ExplodeSpacing=-20)
-			    ULN2003DriverBoard();
-		}
-		
 		// Connect jumper wires
 		step(5, 
 		    "Connect the jumper wires between the motor drivers and the Arduino", 
@@ -95,8 +95,8 @@ module LogoBotAssembly ( PenLift=false ) {
 		        JumperWire(
                     type = JumperWire_FM4,
                     con1 = [[34,43,10], [0,0,-1], 0,0,0],
-                    con2 = [[11.5,31.5,0], [0,0,-1], 0,0,0],
-                    length = 50,
+                    con2 = [[11.5,31.5, -6], [0,0,-1], 0,0,0],
+                    length = 70,
                     conVec1 = [1,0,0],
                     conVec2 = [0,-1,0],
                     midVec = [0.5,-1,0]
@@ -106,8 +106,8 @@ module LogoBotAssembly ( PenLift=false ) {
 		        JumperWire(
                     type = JumperWire_FM4,
                     con1 = [[-31.5,43,10], [0,0,-1], 0,0,0],
-                    con2 = [[-9,31.5,0], [0,0,-1], 0,0,0],
-                    length = 50,
+                    con2 = [[-9,31.5, -6], [0,0,-1], 0,0,0],
+                    length = 70,
                     conVec1 = [1,0,0],
                     conVec2 = [0,-1,0],
                     midVec = [0,0,-1]
@@ -139,7 +139,7 @@ module LogoBotAssembly ( PenLift=false ) {
 		// TODO: Correct ground clearance!
 		step(9, "Push the caster assembly into the base so that it snaps into place", 
 		    "400 300 -6 7 19 115 1 26 625")
-		    attach(LogoBot_Con_Caster, MarbleCastor_Con_Default, Explode=Explode, ExplodeSpacing=15)
+		    attach(LogoBot_Con_Caster, MarbleCastor_Con_Default, ExplodeSpacing=15)
 			MarbleCasterAssembly();
 		
 			
@@ -151,7 +151,7 @@ module LogoBotAssembly ( PenLift=false ) {
 		if (PenLift) {
 			// TODO: wrap into a PenLift sub-assembly
 			step(10, "Fit the pen lift assembly", "400 300 -6 7 19 64 1 212 625")
-			    attach( LogoBot_Con_PenLift, MicroServo_Con_Horn, Explode=Explode )
+			    attach( LogoBot_Con_PenLift, MicroServo_Con_Horn)
 				MicroServo();
 		}
 		
