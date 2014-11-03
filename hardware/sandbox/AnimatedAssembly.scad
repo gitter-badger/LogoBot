@@ -23,3 +23,29 @@ r = [lerp($t, r1[0], r2[0]), lerp($t, r1[1], r2[1]), lerp($t, r1[2], r2[2])];
 rotate(r)
     LogoBotAssembly();
 
+	
+/*
+
+Automated animations... 
+
+Thoughts:
+* Use the parsed assembly steps to create an animation for each assembly
+* Tween between views
+* Parse an animation block for each assembly that controls animation generation and key parameters
+* use PIL ImageDraw module
+
+Animation block:
+* Assembly frames - how many frames to use to animate the assembly
+* Framerate (for final movie file)
+* Transition frames - how many frames to move between views
+* Pause frames - how many frames to pause before moving to next step
+
+How the final animation will be structured:
+For each step:
+* Show the part exploded, as per normal
+* Overlay the step number and description - leave enough time for an average reader to read the desc
+* Animate the assembly step
+* Pause 
+* Animate the view change to the next step
+
+*/
