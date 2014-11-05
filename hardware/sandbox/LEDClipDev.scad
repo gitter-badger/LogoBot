@@ -31,4 +31,6 @@ module LEDClip_Layout_Sandbox()
 
 }
 
-LEDClip_Layout_Sandbox();
+*LEDClip_Layout_Sandbox();
+
+LEDClip(LEDClip_Closed);
